@@ -1,7 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app"
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
+import { getAuth } from "firebase/auth"
+import { getFirestore } from "firebase/firestore";
 
 if (process.env.FIREBASE_API_KEY === 'PLACEHOLDER')
     throw new Error(`You did not set up firebase configuration in .env file!`)
@@ -18,5 +21,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
+const auth = getAuth(app)
+const db = getFirestore(app)
 
-export { app }
+export { app, auth, db }

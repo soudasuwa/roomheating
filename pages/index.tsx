@@ -18,7 +18,8 @@ const HomePage: NextPage = () => {
         </h1>
 
         <p className={styles.description}>
-          Get started by <span className={styles.code}>authenticating()</span> first.
+          Get started by <span className={styles.code}>authenticating()</span>{" "}
+          first.
         </p>
 
         <div className={styles.grid}>
@@ -35,6 +36,10 @@ const HomePage: NextPage = () => {
               In order to access <b>Cryptotech CRM</b> you need to create an
               account first.
             </p>
+          </a>
+          <a className={styles.card} href="/dashboard">
+            <h2>Dashboard</h2>
+            <p>All Cryptotech tools in one place</p>
           </a>
         </div>
       </main>

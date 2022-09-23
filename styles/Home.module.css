@@ -66,12 +66,20 @@
   border: none;
 }
 
+.error {
+  color: #F47174;
+}
+
 .grid {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   max-width: 800px;
+}
+
+.grid.column {
+  flex-direction: column;
 }
 
 .card {
@@ -84,6 +92,10 @@
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
   max-width: 300px;
+}
+
+.grid.column .card {
+  width: 100%;
 }
 
 .card:hover,

@@ -1,9 +1,32 @@
 import type { NextPage } from "next"
 import Head from "next/head"
+import { useState } from "react"
 import footer from "../parts/footer"
 import styles from "../styles/Home.module.css"
 
+import axios from 'axios'
+
 const RegisterPage: NextPage = () => {
+  const [error, setError] = useState<string | undefined>(undefined)
+
+  const fetcher = (url: string, params?: object) =>
+    axios.post(url, params).then((response) => response.data)
+
+  const register = async () => {
+    const params = {
+      email: "lol",
+      password: "pass",
+    }
+
+    const { data, error } = await fetcher("/api/auth/register", params)
+
+    if (error !== undefined) setError(`${error.name}: ${error.code}`)
+  }
+
+  const errorBlock = (
+    <span className={`${styles.code} ${error !== undefined && styles.error}`}>{error || <>status...</>}</span>
+  )
+
   return (
     <div className={styles.container}>
       <Head>
@@ -14,9 +37,10 @@ const RegisterPage: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Registration form</h1>
+        {errorBlock}
 
         <p className={styles.description}>
-          Username:
+          E-mail:
           <br />
           <input className={styles.code} />
           <br />
@@ -27,7 +51,7 @@ const RegisterPage: NextPage = () => {
         </p>
 
         <div className={styles.grid}>
-          <a className={styles.card} href="#">
+          <a className={styles.card} href="#" onClick={register}>
             <h2>Go &rarr;</h2>
             <p>
               Enter <b>credentials above</b> and click here to continue to{" "}

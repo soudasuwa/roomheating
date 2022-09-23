@@ -3,7 +3,36 @@ import Head from "next/head"
 import footer from "../parts/footer"
 import styles from "../styles/Home.module.css"
 
+import axios from "axios"
+import { useState } from "react"
+
 const LoginPage: NextPage = () => {
+  const [error, setError] = useState<string | undefined>(undefined)
+
+  const fetcher = (url: string, params?: object) =>
+    axios.post(url, params).then((response) => response.data)
+
+  const login = async () => {
+    const params = {
+      email: "lol",
+      password: "pass",
+    }
+
+    const { data, error } = await fetcher("/api/auth/login", params)
+
+    if (error !== undefined) setError(`${error.name}: ${error.code}`)
+    else {
+      setError("Login: success")
+      console.log("LOGON", data)
+    }
+  }
+
+  const errorBlock = (
+    <span className={`${styles.code} ${error !== undefined && styles.error}`}>
+      {error || <>status...</>}
+    </span>
+  )
+
   return (
     <div className={styles.container}>
       <Head>
@@ -14,9 +43,10 @@ const LoginPage: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Login form</h1>
+        {errorBlock}
 
         <p className={styles.description}>
-          Username:
+          E-mail:
           <br />
           <input className={styles.code} />
           <br />
@@ -27,13 +57,19 @@ const LoginPage: NextPage = () => {
         </p>
 
         <div className={styles.grid}>
-          <a className={styles.card} href="#">
+          <a className={styles.card} href="#" onClick={login}>
             <h2>Go &rarr;</h2>
-            <p>Enter <b>credentials above</b> and click here to continue to <b>Cryptotech CRM</b>.</p>
+            <p>
+              Enter <b>credentials above</b> and click here to continue to{" "}
+              <b>Cryptotech CRM</b>.
+            </p>
           </a>
           <a className={styles.card} href="/register">
             <h2>Register</h2>
-            <p>In order to access <b>Cryptotech CRM</b> you need to create an account first.</p>
+            <p>
+              In order to access <b>Cryptotech CRM</b> you need to create an
+              account first.
+            </p>
           </a>
           <a className={styles.card} href="/">
             <h2>Home page</h2>
