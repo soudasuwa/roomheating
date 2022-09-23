@@ -3,8 +3,8 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "../../../config/firebase"
 
-const login = (req: NextApiRequest, res: NextApiResponse) => {
-  const email = "test@mail.com"
+const AuthLogin = (req: NextApiRequest, res: NextApiResponse) => {
+  const email = "test2@mail.com"
   const password = "somepassword"
 
   signInWithEmailAndPassword(auth, email, password)
@@ -19,4 +19,4 @@ const login = (req: NextApiRequest, res: NextApiResponse) => {
     })
 }
 
-export default login
+export default AuthLogin

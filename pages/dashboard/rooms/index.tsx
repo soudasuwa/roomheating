@@ -1,7 +1,7 @@
 import type { NextPage } from "next"
 import Head from "next/head"
-import footer from "../../parts/footer"
-import styles from "../../styles/Home.module.css"
+import footer from "../../../parts/footer"
+import styles from "../../../styles/Home.module.css"
 
 import useSWR from "swr"
 import axios from "axios"
@@ -69,7 +69,7 @@ const RoomsPage: NextPage = () => {
             <h2>Dashboard</h2>
             <p>Go back to dashboard</p>
           </a>
-          <a className={styles.card} href="/logout">
+          <a className={styles.card} href="/auth/logout">
             <h2>Log out</h2>
             <p>Quit your session</p>
           </a>

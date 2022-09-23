@@ -1,10 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next"
 import { createUserWithEmailAndPassword } from "firebase/auth"
-import { auth } from "../../config/firebase"
+import { auth } from "../../../config/firebase"
 
-const login = (req: NextApiRequest, res: NextApiResponse) => {
-  const email = "test@mail.com"
+const AuthRegister = (req: NextApiRequest, res: NextApiResponse) => {
+  const email = "test2@mail.com"
   const password = "somepassword"
 
   createUserWithEmailAndPassword(auth, email, password)
@@ -19,4 +19,4 @@ const login = (req: NextApiRequest, res: NextApiResponse) => {
     })
 }
 
-export default login
+export default AuthRegister

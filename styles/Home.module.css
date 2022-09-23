@@ -94,13 +94,18 @@
   max-width: 300px;
 }
 
+.card.disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
 .grid.column .card {
   width: 100%;
 }
 
-.card:hover,
-.card:focus,
-.card:active {
+.card:not(.disabled):hover,
+.card:not(.disabled):focus,
+.card:not(.disabled):active {
   color: #0070f3;
   border-color: #0070f3;
 }

@@ -1,9 +1,16 @@
 import type { NextPage } from "next"
 import Head from "next/head"
 import footer from "../parts/footer"
+import { Card } from "../src/components"
+import { useAuthStatus } from "../src/use"
 import styles from "../styles/Home.module.css"
+import { AUTH_STATUS } from "../src/enum"
+
+const { AUTH } = AUTH_STATUS
 
 const HomePage: NextPage = () => {
+  const status = useAuthStatus()
+
   return (
     <div className={styles.container}>
       <Head>
@@ -23,24 +30,40 @@ const HomePage: NextPage = () => {
         </p>
 
         <div className={styles.grid}>
-          <a className={styles.card} href="/login">
-            <h2>Login</h2>
-            <p>
-              If you <b>already have an account</b> or have a social account
-              attached
-            </p>
-          </a>
-          <a className={styles.card} href="/register">
-            <h2>Register</h2>
-            <p>
-              In order to access <b>Cryptotech CRM</b> you need to create an
-              account first.
-            </p>
-          </a>
-          <a className={styles.card} href="/dashboard">
-            <h2>Dashboard</h2>
-            <p>All Cryptotech tools in one place</p>
-          </a>
+          <Card
+            header="Login"
+            paragraph={
+              <>
+                If you <b>already have an account</b> or have a social account
+                attached
+              </>
+            }
+            link="/auth/login"
+            disabled={status === AUTH}
+          />
+          <Card
+            header="Register"
+            paragraph={
+              <>
+                In order to access <b>Cryptotech CRM</b> you need to create an
+                account first.
+              </>
+            }
+            link="/auth/register"
+            disabled={status === AUTH}
+          />
+          <Card
+            header="Dashboard"
+            paragraph="All Cryptotech tools in one place"
+            link="/dashboard"
+            disabled={status !== AUTH}
+          />
+          <Card
+            header="Log out"
+            paragraph="Log out and clear all sessions"
+            link="/auth/logout"
+            disabled={status !== AUTH}
+          />
         </div>
       </main>
 
