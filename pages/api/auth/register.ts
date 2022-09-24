@@ -3,11 +3,11 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { auth } from "config/firebase"
 
-const AuthRegister = (req: NextApiRequest, res: NextApiResponse) => {
+const AuthRegister = async (req: NextApiRequest, res: NextApiResponse) => {
   const email = "test2@mail.com"
   const password = "somepassword"
 
-  createUserWithEmailAndPassword(auth, email, password)
+  await createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user
