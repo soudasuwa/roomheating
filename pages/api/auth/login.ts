@@ -3,11 +3,11 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "config/firebase"
 
-const AuthLogin = (req: NextApiRequest, res: NextApiResponse) => {
+const AuthLogin = async (req: NextApiRequest, res: NextApiResponse) => {
   const email = "test2@mail.com"
   const password = "somepassword"
 
-  signInWithEmailAndPassword(auth, email, password)
+  await signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user
