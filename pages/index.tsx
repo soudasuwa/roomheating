@@ -1,10 +1,15 @@
 import type { NextPage } from "next"
 import Head from "next/head"
-import footer from "../parts/footer"
-import { Card } from "../src/components"
-import { useAuthStatus } from "../src/use"
-import styles from "../styles/Home.module.css"
-import { AUTH_STATUS } from "../src/enum"
+import footer from "src/parts/footer"
+import { useAuthStatus } from "src/use"
+import styles from "styles/Home.module.css"
+import { AUTH_STATUS } from "src/enum"
+import {
+  DashboardCard,
+  LoginCard,
+  LogoutCard,
+  RegisterCard,
+} from "src/parts/cards"
 
 const { AUTH } = AUTH_STATUS
 
@@ -30,40 +35,10 @@ const HomePage: NextPage = () => {
         </p>
 
         <div className={styles.grid}>
-          <Card
-            header="Login"
-            paragraph={
-              <>
-                If you <b>already have an account</b> or have a social account
-                attached
-              </>
-            }
-            link="/auth/login"
-            disabled={status === AUTH}
-          />
-          <Card
-            header="Register"
-            paragraph={
-              <>
-                In order to access <b>Cryptotech CRM</b> you need to create an
-                account first.
-              </>
-            }
-            link="/auth/register"
-            disabled={status === AUTH}
-          />
-          <Card
-            header="Dashboard"
-            paragraph="All Cryptotech tools in one place"
-            link="/dashboard"
-            disabled={status !== AUTH}
-          />
-          <Card
-            header="Log out"
-            paragraph="Log out and clear all sessions"
-            link="/auth/logout"
-            disabled={status !== AUTH}
-          />
+          <LoginCard />
+          <RegisterCard />
+          <DashboardCard />
+          <LogoutCard />
         </div>
       </main>
 

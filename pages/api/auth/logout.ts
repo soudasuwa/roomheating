@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next"
-import { auth } from "../../../config/firebase"
-import { AUTH_LOGOUT } from "../../../src/enum"
+import { auth } from "config/firebase"
+import { AUTH_LOGOUT } from "src/enum"
 
 const { SUCCESS, NOAUTH, ERROR } = AUTH_LOGOUT
 

@@ -1,18 +1,20 @@
 import axios from "axios"
 import type { NextPage } from "next"
 import Head from "next/head"
-import { useEffect, useState } from "react"
-import footer from "../../parts/footer"
-import styles from "../../styles/Home.module.css"
-import { AUTH_LOGOUT } from "../../src/enum"
-import { Card } from "../../src/components"
-import { AUTH_STATUS } from "../../src/enum"
-import { useAuthStatus } from "../../src/use"
+import { useContext, useEffect, useState } from "react"
+import footer from "src/parts/footer"
+import styles from "styles/Home.module.css"
+import { AUTH_LOGOUT } from "src/enum"
+import { AUTH_STATUS } from "src/enum"
+import { useAuthStatus, useRevalidateAuth } from "src/use"
+import { DashboardCard, HomepageCard, LoginCard, LogoutConfirmCard } from "src/parts/cards"
+import { GlobalContext } from "src/contexts"
 
-const { AUTH } = AUTH_STATUS
 const { SUCCESS, NOAUTH, ERROR } = AUTH_LOGOUT
 
 const LoginPage: NextPage = () => {
+  const revalidateAuth = useRevalidateAuth()
+  const global = useContext(GlobalContext)
   const status = useAuthStatus()
   const [error, setError] = useState<string | undefined>(undefined)
 
@@ -32,12 +34,13 @@ const LoginPage: NextPage = () => {
         : "UNKOWN"
 
     setError("Logout: " + result)
+    revalidateAuth()
     console.log(data)
   }
 
   const errorBlock = (
     <span className={`${styles.code} ${error !== undefined && styles.error}`}>
-      {error || <>status...</>}
+      {error || !global.isAuthenticated ? <>You are not logged in</> : <>status...</>}
     </span>
   )
 
@@ -54,19 +57,10 @@ const LoginPage: NextPage = () => {
         {errorBlock}
 
         <div className={styles.grid}>
-          <Card
-            header="Confirm logout &rarr;"
-            paragraph="Log out and clear sessions"
-            onClick={logout}
-            disabled={status === NOAUTH}
-          />
-          <Card header="Home page" paragraph="Go back to home page" link="/" />
-          <Card
-            header="Dashboard"
-            paragraph="All Cryptotech tools in one place"
-            link="/dashboard"
-            disabled={status !== AUTH}
-          />
+          <LogoutConfirmCard onClick={logout} />
+          <LoginCard />
+          <HomepageCard />
+          <DashboardCard />
         </div>
       </main>
 

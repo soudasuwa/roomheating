@@ -1,11 +1,16 @@
 import type { NextPage } from "next"
 import Head from "next/head"
-import footer from "../../../parts/footer"
-import styles from "../../../styles/Home.module.css"
+import footer from "src/parts/footer"
+import styles from "styles/Home.module.css"
 
 import useSWR from "swr"
 import axios from "axios"
 import { useState } from "react"
+import { DashboardCard, LogoutCard } from "src/parts/cards"
+
+const RoomListSkeleton = () => {
+  return <>Room list is loading...</>
+}
 
 const RoomsPage: NextPage = () => {
   const fetcher = (url: string) => axios(url).then((response) => response.data)
@@ -26,7 +31,11 @@ const RoomsPage: NextPage = () => {
 
         {room === undefined ? (
           <div className={`${styles.grid} ${styles.column}`}>
-            {data &&
+            {data === undefined ? (
+              <RoomListSkeleton />
+            ) : data.length === 0 ? (
+              <>You have no rooms</>
+            ) : (
               data.map((room: Room) => (
                 <a
                   key={room.id}
@@ -37,7 +46,8 @@ const RoomsPage: NextPage = () => {
                   <h2>{room.data.name} &rarr;</h2>
                   <p>{room.data.comment}</p>
                 </a>
-              ))}
+              ))
+            )}
           </div>
         ) : (
           <div className={`${styles.grid} ${styles.column}`}>
@@ -65,14 +75,8 @@ const RoomsPage: NextPage = () => {
         )}
 
         <div className={styles.grid}>
-          <a className={styles.card} href="/dashboard">
-            <h2>Dashboard</h2>
-            <p>Go back to dashboard</p>
-          </a>
-          <a className={styles.card} href="/auth/logout">
-            <h2>Log out</h2>
-            <p>Quit your session</p>
-          </a>
+          <DashboardCard />
+          <LogoutCard />
         </div>
       </main>
 

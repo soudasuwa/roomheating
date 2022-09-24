@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-import { auth } from "../../../config/firebase"
-import { AUTH_STATUS } from "../../../src/enum"
+import { auth } from "config/firebase"
+import { AUTH_STATUS } from "src/enum"
 
 const { AUTH, NOAUTH } = AUTH_STATUS
 

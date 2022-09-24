@@ -1,12 +1,22 @@
 import type { NextPage } from "next"
 import Head from "next/head"
-import footer from "../../parts/footer"
-import styles from "../../styles/Home.module.css"
+import footer from "src/parts/footer"
+import styles from "styles/Home.module.css"
 
 import axios from "axios"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { GlobalContext } from "src/contexts"
+import {
+  HomepageCard,
+  LoginConfirmCard,
+  LogoutCard,
+  RegisterCard,
+} from "src/parts/cards"
+import { useRevalidateAuth } from "src/use"
 
 const LoginPage: NextPage = () => {
+  const revalidateAuth = useRevalidateAuth()
+  const global = useContext(GlobalContext)
   const [error, setError] = useState<string | undefined>(undefined)
 
   const fetcher = (url: string, params?: object) =>
@@ -25,11 +35,17 @@ const LoginPage: NextPage = () => {
       setError("Login: success")
       console.log("LOGON", data)
     }
+
+    revalidateAuth()
   }
 
   const errorBlock = (
     <span className={`${styles.code} ${error !== undefined && styles.error}`}>
-      {error || <>status...</>}
+      {error || global.isAuthenticated ? (
+        <>You are logged in</>
+      ) : (
+        <>status...</>
+      )}
     </span>
   )
 
@@ -48,33 +64,19 @@ const LoginPage: NextPage = () => {
         <p className={styles.description}>
           E-mail:
           <br />
-          <input className={styles.code} />
+          <input className={styles.code} disabled={global.isAuthenticated} />
           <br />
           <br />
           Password:
           <br />
-          <input className={styles.code} />
+          <input className={styles.code} disabled={global.isAuthenticated} />
         </p>
 
         <div className={styles.grid}>
-          <a className={styles.card} href="#" onClick={login}>
-            <h2>Go &rarr;</h2>
-            <p>
-              Enter <b>credentials above</b> and click here to continue to{" "}
-              <b>Cryptotech CRM</b>.
-            </p>
-          </a>
-          <a className={styles.card} href="/auth/register">
-            <h2>Register</h2>
-            <p>
-              In order to access <b>Cryptotech CRM</b> you need to create an
-              account first.
-            </p>
-          </a>
-          <a className={styles.card} href="/">
-            <h2>Home page</h2>
-            <p>Go back to home page</p>
-          </a>
+          <LoginConfirmCard onClick={login} />
+          <RegisterCard />
+          <HomepageCard />
+          <LogoutCard />
         </div>
       </main>
 

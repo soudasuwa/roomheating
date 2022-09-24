@@ -1,12 +1,16 @@
 import type { NextPage } from "next"
 import Head from "next/head"
-import { useState } from "react"
-import footer from "../../parts/footer"
-import styles from "../../styles/Home.module.css"
+import { useContext, useState } from "react"
+import footer from "src/parts/footer"
+import styles from "styles/Home.module.css"
 
 import axios from "axios"
+import { Card } from "src/components"
+import GlobalContext from "src/contexts/global"
+import { HomepageCard, LoginCard, LogoutCard, RegisterConfirmCard } from "src/parts/cards"
 
 const RegisterPage: NextPage = () => {
+  const global = useContext(GlobalContext)
   const [error, setError] = useState<string | undefined>(undefined)
 
   const fetcher = (url: string, params?: object) =>
@@ -29,7 +33,11 @@ const RegisterPage: NextPage = () => {
 
   const errorBlock = (
     <span className={`${styles.code} ${error !== undefined && styles.error}`}>
-      {error || <>status...</>}
+      {error || global.isAuthenticated ? (
+        <>You are logged in</>
+      ) : (
+        <>status...</>
+      )}
     </span>
   )
 
@@ -57,24 +65,10 @@ const RegisterPage: NextPage = () => {
         </p>
 
         <div className={styles.grid}>
-          <a className={styles.card} href="#" onClick={register}>
-            <h2>Go &rarr;</h2>
-            <p>
-              Enter <b>credentials above</b> and click here to continue to{" "}
-              <b>Cryptotech CRM</b>.
-            </p>
-          </a>
-          <a className={styles.card} href="/auth/login">
-            <h2>Login</h2>
-            <p>
-              If you <b>already have an account</b> or have a social account
-              attached
-            </p>
-          </a>
-          <a className={styles.card} href="/">
-            <h2>Home page</h2>
-            <p>Go back to home page</p>
-          </a>
+          <RegisterConfirmCard onClick={register} />
+          <LoginCard />
+          <LogoutCard />
+          <HomepageCard />
         </div>
       </main>
 

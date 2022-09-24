@@ -1,16 +1,10 @@
 import type { NextPage } from "next"
 import Head from "next/head"
-import footer from "../../parts/footer"
-import { Card } from "../../src/components"
-import { AUTH_STATUS } from "../../src/enum"
-import { useAuthStatus } from "../../src/use"
-import styles from "../../styles/Home.module.css"
-
-const { AUTH } = AUTH_STATUS
+import { HomepageCard, LogoutCard, RoomsCard } from "src/parts/cards"
+import footer from "src/parts/footer"
+import styles from "styles/Home.module.css"
 
 const DashboardPage: NextPage = () => {
-  const status = useAuthStatus()
-
   return (
     <div className={styles.container}>
       <Head>
@@ -25,24 +19,9 @@ const DashboardPage: NextPage = () => {
         </h1>
 
         <div className={styles.grid}>
-          <Card
-            header="Rooms"
-            paragraph="Check status of all rooms."
-            link="/dashboard/rooms"
-            disabled={status !== AUTH}
-          />
-          <Card
-            header="Log out"
-            paragraph="Quit your session"
-            link="/auth/logout"
-            disabled={status !== AUTH}
-          />
-          <Card
-            header="Home page"
-            paragraph="Go back to home page"
-            link="/"
-            disabled={false}
-          />
+          <RoomsCard />
+          <LogoutCard />
+          <HomepageCard />
         </div>
       </main>
 
