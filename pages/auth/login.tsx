@@ -4,7 +4,7 @@ import footer from "src/parts/footer"
 import styles from "styles/Home.module.css"
 
 import axios from "axios"
-import { useContext, useState } from "react"
+import { createRef, useContext, useState } from "react"
 import { GlobalContext } from "src/contexts"
 import {
   HomepageCard,
@@ -19,13 +19,23 @@ const LoginPage: NextPage = () => {
   const global = useContext(GlobalContext)
   const [error, setError] = useState<string | undefined>(undefined)
 
+  const email = createRef<HTMLInputElement>()
+  const password = createRef<HTMLInputElement>()
+
   const fetcher = (url: string, params?: object) =>
     axios.post(url, params).then((response) => response.data)
 
   const login = async () => {
+    if (email.current === null) return setError("Email input is missing")
+    if (password.current === null) return setError("Password input is missing")
+    if (email.current.value.length === 0)
+      return setError("Email input is empty")
+    if (password.current.value.length === 0)
+      return setError("Password input is empty")
+
     const params = {
-      email: "lol",
-      password: "pass",
+      email: email.current.value,
+      password: password.current.value,
     }
 
     const { data, error } = await fetcher("/api/auth/login", params)
@@ -36,12 +46,14 @@ const LoginPage: NextPage = () => {
       console.log("LOGON", data)
     }
 
-    revalidateAuth()
+    // revalidateAuth()
   }
 
   const errorBlock = (
     <span className={`${styles.code} ${error !== undefined && styles.error}`}>
-      {error || global.isAuthenticated ? (
+      {error !== undefined ? (
+        error
+      ) : global.isAuthenticated ? (
         <>You are logged in</>
       ) : (
         <>status...</>
@@ -64,12 +76,20 @@ const LoginPage: NextPage = () => {
         <p className={styles.description}>
           E-mail:
           <br />
-          <input className={styles.code} disabled={global.isAuthenticated} />
+          <input
+            className={styles.code}
+            disabled={global.isAuthenticated}
+            ref={email}
+          />
           <br />
           <br />
           Password:
           <br />
-          <input className={styles.code} disabled={global.isAuthenticated} />
+          <input
+            className={styles.code}
+            disabled={global.isAuthenticated}
+            ref={password}
+          />
         </p>
 
         <div className={styles.grid}>

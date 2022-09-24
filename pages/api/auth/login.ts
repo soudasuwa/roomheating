@@ -3,9 +3,22 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "config/firebase"
 
+type LoginBody = {
+  email?: string
+  password?: string
+}
+
 const AuthLogin = async (req: NextApiRequest, res: NextApiResponse) => {
-  const email = "test2@mail.com"
-  const password = "somepassword"
+  if (req.method !== "POST")
+    return res.status(200).json({ error: "Only post method is allowed" })
+
+  const { email, password }: LoginBody = req.body
+
+  if (email === undefined || email.length === 0)
+    return res.status(200).json("email is required")
+
+  if (password === undefined || password.length === 0)
+    return res.status(200).json("password is required")
 
   await signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {

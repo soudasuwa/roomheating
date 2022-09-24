@@ -1,39 +1,56 @@
 import type { NextPage } from "next"
 import Head from "next/head"
-import { useContext, useState } from "react"
+import { createRef, useContext, useState } from "react"
 import footer from "src/parts/footer"
 import styles from "styles/Home.module.css"
 
 import axios from "axios"
 import { Card } from "src/components"
 import GlobalContext from "src/contexts/global"
-import { HomepageCard, LoginCard, LogoutCard, RegisterConfirmCard } from "src/parts/cards"
+import {
+  HomepageCard,
+  LoginCard,
+  LogoutCard,
+  RegisterConfirmCard,
+} from "src/parts/cards"
 
 const RegisterPage: NextPage = () => {
   const global = useContext(GlobalContext)
   const [error, setError] = useState<string | undefined>(undefined)
 
+  const email = createRef<HTMLInputElement>()
+  const password = createRef<HTMLInputElement>()
+
   const fetcher = (url: string, params?: object) =>
     axios.post(url, params).then((response) => response.data)
 
   const register = async () => {
+    if (email.current === null) return setError("Email input is missing")
+    if (password.current === null) return setError("Password input is missing")
+    if (email.current.value.length === 0)
+      return setError("Email input is empty")
+    if (password.current.value.length === 0)
+      return setError("Password input is empty")
+
     const params = {
-      email: "lol",
-      password: "pass",
+      email: email.current.value,
+      password: password.current.value,
     }
 
     const { data, error } = await fetcher("/api/auth/register", params)
 
     if (error !== undefined) setError(`${error.name}: ${error.code}`)
     else {
-      setError("Login: success")
+      setError("Register: success")
       console.log("REGISTERED", data)
     }
   }
 
   const errorBlock = (
     <span className={`${styles.code} ${error !== undefined && styles.error}`}>
-      {error || global.isAuthenticated ? (
+      {error !== undefined ? (
+        error
+      ) : global.isAuthenticated ? (
         <>You are logged in</>
       ) : (
         <>status...</>
@@ -56,12 +73,20 @@ const RegisterPage: NextPage = () => {
         <p className={styles.description}>
           E-mail:
           <br />
-          <input className={styles.code} />
+          <input
+            className={styles.code}
+            disabled={global.isAuthenticated}
+            ref={email}
+          />
           <br />
           <br />
           Password:
           <br />
-          <input className={styles.code} />
+          <input
+            className={styles.code}
+            disabled={global.isAuthenticated}
+            ref={password}
+          />
         </p>
 
         <div className={styles.grid}>
