@@ -1,48 +1,38 @@
 import axios from "axios"
 import type { NextPage } from "next"
 import Head from "next/head"
-import { useContext, useEffect, useState } from "react"
+
 import footer from "src/parts/footer"
 import styles from "styles/Home.module.css"
 import { AUTH_LOGOUT } from "src/enum"
-import { AUTH_STATUS } from "src/enum"
-import { useAuthStatus, useRevalidateAuth } from "src/use"
-import { DashboardCard, HomepageCard, LoginCard, LogoutConfirmCard } from "src/parts/cards"
+import {  useErrorReporter, useRevalidateAuth } from "src/use"
+import {
+  DashboardCard,
+  HomepageCard,
+  LoginCard,
+  LogoutConfirmCard,
+} from "src/parts/cards"
+import { useContext, useEffect } from "react"
 import { GlobalContext } from "src/contexts"
 
 const { SUCCESS, NOAUTH, ERROR } = AUTH_LOGOUT
 
 const LoginPage: NextPage = () => {
-  const revalidateAuth = useRevalidateAuth()
   const global = useContext(GlobalContext)
-  const status = useAuthStatus()
-  const [error, setError] = useState<string | undefined>(undefined)
+  const [error, setError, errorBlock] = useErrorReporter()
 
   useEffect(() => {
-    if (status === AUTH_STATUS.NOAUTH) setError("You are not logged in")
-  }, [status])
+    if (global.isAuthenticated !== true) setError('You are not logged in')
+  }, [])
 
   const logout = async () => {
     const { data } = await axios.get("/api/auth/logout")
-    const result =
-      data === SUCCESS
-        ? "success"
-        : data === NOAUTH
-        ? "you were not logged in"
-        : data === ERROR
-        ? "error occured"
-        : "UNKOWN"
-
-    setError("Logout: " + result)
-    revalidateAuth()
-    console.log(data)
+   
+    // redirect to home page if logged out successefuly
+    // if (data === SUCCESS) window.location.href = '/'
+    // show error otherwise
+    // else setError('...')
   }
-
-  const errorBlock = (
-    <span className={`${styles.code} ${error !== undefined && styles.error}`}>
-      {error || !global.isAuthenticated ? <>You are not logged in</> : <>status...</>}
-    </span>
-  )
 
   return (
     <div className={styles.container}>
@@ -54,7 +44,7 @@ const LoginPage: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Logout form</h1>
-        {errorBlock}
+        <>{errorBlock}</>
 
         <div className={styles.grid}>
           <LogoutConfirmCard onClick={logout} />

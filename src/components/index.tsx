@@ -1,3 +1,4 @@
 import Card from "./Card"
+import ErrorBlock from "./ErrorBlock"
 
-export { Card }
+export { Card, ErrorBlock }
