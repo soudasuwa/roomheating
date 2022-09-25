@@ -1,6 +1,6 @@
 import type { NextPage } from "next"
 import Head from "next/head"
-import { createRef, useContext, useState } from "react"
+import { createRef, useContext, useEffect, useState } from "react"
 import footer from "src/parts/footer"
 import styles from "styles/Home.module.css"
 
@@ -13,10 +13,11 @@ import {
   LogoutCard,
   RegisterConfirmCard,
 } from "src/parts/cards"
+import { useErrorReporter } from "src/use"
 
 const RegisterPage: NextPage = () => {
   const global = useContext(GlobalContext)
-  const [error, setError] = useState<string | undefined>(undefined)
+  const [error, setError, errorBlock] = useErrorReporter()
 
   const email = createRef<HTMLInputElement>()
   const password = createRef<HTMLInputElement>()
@@ -45,18 +46,6 @@ const RegisterPage: NextPage = () => {
       console.log("REGISTERED", data)
     }
   }
-
-  const errorBlock = (
-    <span className={`${styles.code} ${error !== undefined && styles.error}`}>
-      {error !== undefined ? (
-        error
-      ) : global.isAuthenticated ? (
-        <>You are logged in</>
-      ) : (
-        <>status...</>
-      )}
-    </span>
-  )
 
   return (
     <div className={styles.container}>

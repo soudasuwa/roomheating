@@ -1,19 +1,23 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { db } from "config/firebase"
+import { deleteDoc, doc, setDoc } from "firebase/firestore"
 import type { NextApiRequest, NextApiResponse } from "next"
-import { auth } from "config/firebase"
-import { AUTH_LOGOUT } from "src/enum"
 
-const { SUCCESS, NOAUTH, ERROR } = AUTH_LOGOUT
+const AuthLogout = async (req: NextApiRequest, res: NextApiResponse) => {
+  if (req.method !== "POST")
+    return res
+      .status(200)
+      .json({ error: "Server: only post method is allowed" })
 
-const AuthLogout = async (
-  req: NextApiRequest,
-  res: NextApiResponse<AUTH_LOGOUT>
-) =>
-  auth.currentUser === null
-    ? res.status(200).json(NOAUTH)
-    : auth
-        .signOut()
-        .then(() => res.status(200).json(SUCCESS))
-        .catch((e) => res.status(200).json(ERROR))
+  const session = req.body.session
+
+  // Basic data validation
+  if (session === undefined || session.length === 0)
+    return res.status(200).json({ error: "Logout: session is required" })
+
+  await deleteDoc(doc(db, "/sessions/", session))
+
+  res.status(200).json({ data: "success" })
+}
 
 export default AuthLogout

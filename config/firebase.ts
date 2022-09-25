@@ -24,6 +24,4 @@ const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 const db = getFirestore(app)
 
-const isAuthenticated = () => auth.currentUser !== null
-
-export { app, auth, db, isAuthenticated }
+export { app, auth, db }

@@ -1,9 +1,7 @@
 import type { NextPage } from "next"
 import Head from "next/head"
 import footer from "src/parts/footer"
-import { useAuthStatus } from "src/use"
 import styles from "styles/Home.module.css"
-import { AUTH_STATUS } from "src/enum"
 import {
   DashboardCard,
   LoginCard,
@@ -11,11 +9,7 @@ import {
   RegisterCard,
 } from "src/parts/cards"
 
-const { AUTH } = AUTH_STATUS
-
 const HomePage: NextPage = () => {
-  const status = useAuthStatus()
-
   return (
     <div className={styles.container}>
       <Head>

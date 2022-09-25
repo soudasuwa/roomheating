@@ -4,7 +4,7 @@ import footer from "src/parts/footer"
 import styles from "styles/Home.module.css"
 
 import axios from "axios"
-import { createRef, useContext, useState } from "react"
+import { createRef, useContext, useEffect, useState } from "react"
 import { GlobalContext } from "src/contexts"
 import {
   HomepageCard,
@@ -12,12 +12,11 @@ import {
   LogoutCard,
   RegisterCard,
 } from "src/parts/cards"
-import { useRevalidateAuth } from "src/use"
+import { useErrorReporter } from "src/use"
 
 const LoginPage: NextPage = () => {
-  const revalidateAuth = useRevalidateAuth()
   const global = useContext(GlobalContext)
-  const [error, setError] = useState<string | undefined>(undefined)
+  const [error, setError, errorBlock] = useErrorReporter()
 
   const email = createRef<HTMLInputElement>()
   const password = createRef<HTMLInputElement>()
@@ -40,28 +39,12 @@ const LoginPage: NextPage = () => {
 
     const res = await fetcher("/api/auth/login", params)
 
-    console.log(res)
-
     if (res.error !== undefined) setError(res.error)
     else {
       setError("Login: success")
-      console.log("LOGON", res.data)
+      global.setSession(res.data)
     }
-
-    // revalidateAuth()
   }
-
-  const errorBlock = (
-    <span className={`${styles.code} ${error !== undefined && styles.error}`}>
-      {error !== undefined ? (
-        error
-      ) : global.isAuthenticated ? (
-        <>You are logged in</>
-      ) : (
-        <>status...</>
-      )}
-    </span>
-  )
 
   return (
     <div className={styles.container}>
