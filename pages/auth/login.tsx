@@ -38,12 +38,14 @@ const LoginPage: NextPage = () => {
       password: password.current.value,
     }
 
-    const { data, error } = await fetcher("/api/auth/login", params)
+    const res = await fetcher("/api/auth/login", params)
 
-    if (error !== undefined) setError(`${error.name}: ${error.code}`)
+    console.log(res)
+
+    if (res.error !== undefined) setError(res.error)
     else {
       setError("Login: success")
-      console.log("LOGON", data)
+      console.log("LOGON", res.data)
     }
 
     // revalidateAuth()

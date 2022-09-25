@@ -39,7 +39,7 @@ const RegisterPage: NextPage = () => {
 
     const { data, error } = await fetcher("/api/auth/register", params)
 
-    if (error !== undefined) setError(`${error.name}: ${error.code}`)
+    if (error !== undefined) setError(error)
     else {
       setError("Register: success")
       console.log("REGISTERED", data)

@@ -1,7 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next"
-import { createUserWithEmailAndPassword } from "firebase/auth"
-import { auth } from "config/firebase"
+import { db } from "config/firebase"
+import { doc, getDoc, setDoc } from "firebase/firestore"
+import hashing from "src/lib/hashing"
+import crypto from 'crypto'
 
 type RegisterBody = {
   email?: string
@@ -15,21 +17,30 @@ const AuthRegister = async (req: NextApiRequest, res: NextApiResponse) => {
   const { email, password }: RegisterBody = req.body
 
   if (email === undefined || email.length === 0)
-    return res.status(200).json("email is required")
+    return res.status(200).json({error: "email is required"})
 
   if (password === undefined || password.length === 0)
-    return res.status(200).json("password is required")
+    return res.status(200).json({error: "password is required"})
 
-  await createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user
+  const current = await getDoc(doc(db, "/accounts/", email))
 
-      res.status(200).json({ data: userCredential })
-    })
-    .catch((error) => {
-      res.status(200).json({ error: error || null })
-    })
+  if (current.exists() === true)
+    return res
+      .status(200)
+      .json({ error: "Login: this email is already registered" })
+
+  const account: AccountDocument = {
+    id: crypto.randomUUID(),
+    data: {
+      email,
+      password: hashing.password(password),
+      created: new Date().toISOString(),
+    },
+  }
+
+  await setDoc(doc(db, "/accounts/", account.id), account.data)
+
+  return res.status(200).json({ data: "success" })
 }
 
 export default AuthRegister
