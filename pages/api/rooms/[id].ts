@@ -1,17 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 import { doc, getDoc } from "firebase/firestore"
-import { auth, db } from "config/firebase"
+import { db } from "config/firebase"
 
 const room = async (req: NextApiRequest, res: NextApiResponse) => {
-  const user = auth.currentUser
-
-  if (user === null) {
-    res.status(200).json({ error: "User not logged in" })
-
-    return
-  }
-
   const { id } = req.query
 
   if (id === undefined) {
