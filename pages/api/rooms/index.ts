@@ -2,15 +2,15 @@ import { NextApiRequest, NextApiResponse } from "next"
 
 import { collection, getDocs, query, where } from "firebase/firestore"
 import { db } from "config/firebase"
-import Cookies from 'cookies'
+// import Cookies from 'cookies'
 
 const rooms = async (req: NextApiRequest, res: NextApiResponse) => {
-  const cookies = new Cookies(req, res)
-  const session = cookies.get('session')
+  // const cookies = new Cookies(req, res)
+  // const session = cookies.get('session')
 
-  return res.status(200).json({error: `Session: ${session}`})
+  // return res.status(200).json({error: `Session: ${session}`})
 
-  let user = {uuid: 123}
+  let user = {uid: 'kOHgEhm1bwdJO0XZh7iz0jm0tQi2'}
 
   if (user === null) {
     res.status(200).json({ error: "User not logged in" })
