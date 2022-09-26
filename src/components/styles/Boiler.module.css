@@ -1,0 +1,44 @@
+.main {
+  background-color: white;
+  border-radius: 20px;
+  padding: 10px 20px 15px;
+  color: gray;
+  margin-bottom: 20px;
+}
+
+.main:last-of-type {
+  margin-bottom: 0;
+}
+
+.devider {
+  color: lightgray;
+}
+
+.model {
+  font-size: 30px;
+  color: black;
+}
+
+.property {
+  display: grid;
+  grid-template-columns: 40px auto;
+  margin-bottom: 10px;
+}
+
+.property:last-of-type {
+  margin-bottom: 0;
+}
+
+.icon {
+    background-color: #81c259;
+    border-radius: 12px;
+    color: white;
+}
+
+.description {
+    padding-left: 10px;
+}
+
+.value {
+    color: black;
+}

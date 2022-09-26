@@ -1,5 +1,6 @@
 import type { NextPage } from "next"
 import Head from "next/head"
+import BoilersList from "src/components/BoilersList"
 import { HomepageCard, LogoutCard, RoomsCard } from "src/parts/cards"
 import footer from "src/parts/footer"
 import styles from "styles/Home.module.css"
@@ -17,6 +18,8 @@ const DashboardPage: NextPage = () => {
         <h1 className={styles.title}>
           <a href="https://cryptotech.ee">Cryptotech</a> CRM
         </h1>
+
+        <BoilersList />
 
         <div className={styles.grid}>
           <RoomsCard />

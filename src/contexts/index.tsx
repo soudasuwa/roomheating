@@ -1,5 +1,4 @@
-import GlobalContext from "./global";
+import GlobalContext from "./global"
+import ErrorContext from "./ErrorContext"
 
-export {
-    GlobalContext
-}
+export { GlobalContext, ErrorContext }

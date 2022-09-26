@@ -36,3 +36,23 @@ interface SessionDocument {
   id: UUID
   data: SessionData
 }
+
+interface BoilerLocation {
+  name: string
+}
+
+interface BoilerPower {
+  watts: number
+}
+
+interface BoilerData {
+  model: string
+  name: string
+  location: BoilerLocation
+  power: BoilerPower
+}
+
+interface BoilerDocument {
+  id: UUID
+  data: BoilerData
+}
