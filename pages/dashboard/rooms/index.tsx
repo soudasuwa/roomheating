@@ -28,11 +28,11 @@ const RoomsPage: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Rooms</h1>
-        <pre>{JSON.stringify(data)}</pre>
+        {/* <pre>{JSON.stringify(data)}</pre> */}
 
         {room === undefined ? (
           <div className={`${styles.grid} ${styles.column}`}>
-            {/* {data === undefined ? (
+            {data === undefined ? (
               <RoomListSkeleton />
             ) : data.length === 0 ? (
               <>You have no rooms</>
@@ -48,7 +48,7 @@ const RoomsPage: NextPage = () => {
                   <p>{room.data.comment}</p>
                 </a>
               ))
-            )} */}
+            )}
           </div>
         ) : (
           <div className={`${styles.grid} ${styles.column}`}>
