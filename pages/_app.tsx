@@ -1,10 +1,13 @@
 import "styles/globals.css"
-import type { AppProps } from "next/app"
-import { GlobalContext } from "src/contexts"
+import { GlobalContext, PageContext } from "src/contexts"
 import { useEffect, useState } from "react"
 import { getCookie, setCookie } from "cookies-next"
 
-function MyApp({ Component, pageProps }: AppProps) {
+import type { MyAppProps } from "types"
+import { Footer, PageBody } from "src/components"
+import Navigation from "src/components/Navigation"
+
+const Main = ({ Component, pageProps }: MyAppProps) => {
   const [session, setSession] = useState<string | undefined>(
     (getCookie("session") as any) || undefined
   )
@@ -19,10 +22,20 @@ function MyApp({ Component, pageProps }: AppProps) {
   const context = { isAuthenticated, session, setSession, clearSession }
 
   return (
-    <GlobalContext.Provider value={context}>
-      <Component {...pageProps} />
-    </GlobalContext.Provider>
+    <>
+      <GlobalContext.Provider value={context}>
+        <PageContext.Provider value={{ title: Component.title }}>
+          <div className="min-h-full">
+            <Navigation />
+            <PageBody>
+              <Component {...pageProps} />
+            </PageBody>
+            <Footer />
+          </div>
+        </PageContext.Provider>
+      </GlobalContext.Provider>
+    </>
   )
 }
 
-export default MyApp
+export default Main

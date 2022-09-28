@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore"
 import hashing from "src/lib/hashing"
 import crypto from "crypto"
+import { AccountDocument, SessionDocument } from "types"
 
 type LoginBody = {
   email?: string

@@ -4,6 +4,7 @@ import { db } from "config/firebase"
 import { doc, getDoc, setDoc } from "firebase/firestore"
 import hashing from "src/lib/hashing"
 import crypto from 'crypto'
+import { AccountDocument } from "types"
 
 type RegisterBody = {
   email?: string
