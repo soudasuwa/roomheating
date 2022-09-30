@@ -28,14 +28,19 @@ interface BoilerDocument {
   data: BoilerData
 }
 
-type Notification = {
-  id: string
+type NotificationData = {
+  user: UUID
   boiler: {
     name: string
   }
   old: string
   message: string
   icon: keyof typeof import("/home/alessandro/Projects/Cryptotech/roomheating/node_modules/@heroicons/react/24/outline/index")
+}
+
+type NotificationDocument = {
+  id: UUID
+  data: NotificationData
 }
 
 type FirestoreID = string

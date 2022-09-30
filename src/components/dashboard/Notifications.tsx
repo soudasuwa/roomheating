@@ -18,7 +18,7 @@ const Notifications = () => {
               {context &&
                 context.notifications &&
                 context.notifications.map(
-                  ({ id, boiler, old, message, icon }) => {
+                  ({ id, data: { boiler, old, message, icon } }) => {
                     const Icon = icons[icon]
 
                     return (

@@ -1,8 +1,8 @@
 import { createContext } from "react"
-import { Notification } from "types"
+import { NotificationDocument } from "types"
 
 type Type = {
-    notifications?: Notification[]
+    notifications?: NotificationDocument[]
 }
 
 const NotificationsContext = createContext<Type | undefined>(undefined)
