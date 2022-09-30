@@ -1,4 +1,5 @@
 import type { NextPage } from "next"
+import * as HeroIcons from "@heroicons/react/24/outline";
 import { AppProps } from "next/app"
 
 type MyNextPageProps = { title?: string }
@@ -35,7 +36,7 @@ type NotificationData = {
   }
   old: string
   message: string
-  icon: keyof typeof import("/home/alessandro/Projects/Cryptotech/roomheating/node_modules/@heroicons/react/24/outline/index")
+  icon: keyof typeof HeroIcons
 }
 
 type NotificationDocument = {
