@@ -1,10 +1,12 @@
-import * as icons from "@heroicons/react/24/outline"
 import { useContext } from "react"
 
-import { NotificationsContext } from "./contexts"
+import { NotificationContext, NotificationsContext } from "./contexts"
+import Notification from "./Notification"
 
 const Notifications = () => {
   const context = useContext(NotificationsContext)
+  const notifications =
+    (context && context.notifications) || Array(3).fill(undefined)
 
   return (
     <>
@@ -15,30 +17,14 @@ const Notifications = () => {
           </div>
           <div>
             <ul role="list" className="divide-y divide-gray-200">
-              {context &&
-                context.notifications &&
-                context.notifications.map(
-                  ({ id, data: { boiler, old, message, icon } }) => {
-                    const Icon = icons[icon]
-
-                    return (
-                      <li key={id} className="py-4">
-                        <div className="flex space-x-3">
-                          <Icon className="h-6 w-6" />
-                          <div className="flex-1 space-y-1">
-                            <div className="flex items-center justify-between">
-                              <h3 className="text-sm font-medium">
-                                {boiler.name}
-                              </h3>
-                              <p className="text-sm text-gray-500">{old}</p>
-                            </div>
-                            <p className="text-sm text-gray-500">{message}</p>
-                          </div>
-                        </div>
-                      </li>
-                    )
-                  }
-                )}
+              {notifications.map((notification, index) => (
+                  <NotificationContext.Provider
+                    key={index}
+                    value={notification}
+                  >
+                    <Notification />
+                  </NotificationContext.Provider>
+                ))}
             </ul>
             <div className="border-t border-gray-200 py-4 text-sm">
               <a
