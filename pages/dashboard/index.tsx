@@ -357,14 +357,11 @@ const DashboardPage = () => {
     <>
       <div className="mx-auto w-full max-w-7xl flex-grow lg:flex">
         <BoilersContext.Provider value={boilersContext}>
-          {selected !== undefined ? (
-            <BoilerEditor />
-          ) : (
-            <div className="min-w-0 flex-1 bg-white xl:flex">
-              <Profile />
-              <Boilers />
-            </div>
-          )}
+          <div className="min-w-0 flex-1 bg-white xl:flex">
+            <Profile />
+
+            {selected !== undefined ? <BoilerEditor /> : <Boilers />}
+          </div>
         </BoilersContext.Provider>
         <Notifications />
       </div>
