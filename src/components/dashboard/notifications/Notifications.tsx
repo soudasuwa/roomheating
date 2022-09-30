@@ -1,9 +1,10 @@
 import { useContext } from "react"
 
-import { NotificationContext, NotificationsContext } from "./contexts"
-import Notification from "./Notification"
+import { NotificationsContext, NotificationContext, Notification } from "."
 
-const Notifications = () => {
+type Props = {}
+
+const Notifications = ({}: Props) => {
   const context = useContext(NotificationsContext)
   const notifications =
     (context && context.notifications) || Array(3).fill(undefined)
@@ -18,13 +19,10 @@ const Notifications = () => {
           <div>
             <ul role="list" className="divide-y divide-gray-200">
               {notifications.map((notification, index) => (
-                  <NotificationContext.Provider
-                    key={index}
-                    value={notification}
-                  >
-                    <Notification />
-                  </NotificationContext.Provider>
-                ))}
+                <NotificationContext.Provider key={index} value={notification}>
+                  <Notification />
+                </NotificationContext.Provider>
+              ))}
             </ul>
             <div className="border-t border-gray-200 py-4 text-sm">
               <a
@@ -40,5 +38,9 @@ const Notifications = () => {
     </>
   )
 }
+
+const defaultProps: Props = {}
+
+Notifications.defaultProps = defaultProps
 
 export default Notifications

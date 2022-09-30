@@ -1,11 +1,12 @@
-import BoilersContext from "./BoilersContext"
-import BoilerContext from "./BoilerContext"
 import NotificationsContext from "./NotificationsContext"
 import NotificationContext from "./NotificationContext"
 
+import Notifications from "./Notifications"
+import Notification from "./Notification"
+
 export {
-  BoilersContext,
-  BoilerContext,
   NotificationsContext,
   NotificationContext,
+  Notifications,
+  Notification,
 }

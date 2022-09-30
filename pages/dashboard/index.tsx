@@ -7,12 +7,8 @@ import useSWR, { mutate } from "swr"
 import axios from "axios"
 import { BoilerDocument } from "types"
 import { Modal } from "src/components"
-import { BoilerEditor, Boilers } from "src/components/dashboard/boilers"
-import {
-  BoilersContext,
-  NotificationsContext,
-} from "src/components/dashboard/contexts"
-import { Notifications } from "src/components/dashboard"
+import { BoilerEditor, Boilers, BoilersContext } from "src/components/dashboard/boilers"
+import { Notifications, NotificationsContext } from "src/components/dashboard/notifications"
 
 const Actions = () => {
   const [open, setOpen] = useState(false)

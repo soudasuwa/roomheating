@@ -1,7 +1,7 @@
 import * as icons from "@heroicons/react/24/outline"
 import React, { useContext } from "react"
-import Skeleton from "../Skeleton"
-import { NotificationContext } from "./contexts"
+import { Skeleton } from "src/components"
+import { NotificationContext } from "."
 
 type Props = {}
 

@@ -1,7 +1,7 @@
 import { StarIcon } from "@heroicons/react/20/solid"
 import { useContext, Fragment } from "react"
 import { classNames } from "src/lib"
-import { BoilerContext, BoilersContext } from "../contexts"
+import { BoilerContext, BoilersContext } from "."
 
 type Props = {}
 

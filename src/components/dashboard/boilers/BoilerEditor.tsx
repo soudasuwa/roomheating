@@ -1,6 +1,5 @@
 import { Disclosure } from "@headlessui/react"
 import {
-  Bars3BottomRightIcon,
   Battery0Icon,
   Battery100Icon,
   Battery50Icon,
@@ -9,7 +8,7 @@ import {
 } from "@heroicons/react/24/outline"
 import { useContext, useState } from "react"
 import { classNames } from "src/lib"
-import { BoilersContext } from "../contexts"
+import { BoilersContext } from "."
 
 type Props = {}
 

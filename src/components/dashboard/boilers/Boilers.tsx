@@ -1,8 +1,7 @@
 import { useContext } from "react"
 import { BoilerDocument } from "types"
-import { BoilerContext, BoilersContext } from "../contexts"
-import SortingOptions from "../SortingOptions"
-import Boiler from "./Boiler"
+import { Boiler, BoilerContext, BoilersContext } from "."
+import SortingOptions from "src/components/dashboard/SortingOptions"
 
 const SortBoilersByFavorite = (a: BoilerDocument, b: BoilerDocument) =>
   a.data.favourite === b.data.favourite ? 0 : a.data.favourite ? -1 : 1
