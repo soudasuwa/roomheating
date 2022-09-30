@@ -14,6 +14,14 @@ type Props = {}
 const Boilers = ({}: Props) => {
   const context = useContext(BoilersContext)
 
+  const boilers =
+    (context &&
+      context.boilers &&
+      context.boilers
+        .sort(SortBoilersByDateCreated)
+        .sort(SortBoilersByFavorite)) ||
+    Array(3).fill(undefined)
+
   return (
     <>
       <div className="bg-white lg:min-w-0 lg:flex-1">
@@ -27,11 +35,7 @@ const Boilers = ({}: Props) => {
           role="list"
           className="divide-y divide-gray-200 border-b border-gray-200"
         >
-          {context?.boilers === undefined ? (
-            Array(3)
-              .fill(null)
-              .map((_, index) => <Boiler key={index} />)
-          ) : context.boilers.length === 0 ? (
+          {boilers.length === 0 ? (
             <div className="mx-5 my-10">
               <p className="text-xl text-gray-700">
                 You&apos;ve got no boilers yet.
@@ -42,14 +46,11 @@ const Boilers = ({}: Props) => {
               </p>
             </div>
           ) : (
-            context.boilers
-              .sort(SortBoilersByDateCreated)
-              .sort(SortBoilersByFavorite)
-              .map((boiler) => (
-                <BoilerContext.Provider key={boiler.id} value={boiler}>
-                  <Boiler />
-                </BoilerContext.Provider>
-              ))
+            boilers.map((boiler, index) => (
+              <BoilerContext.Provider key={index} value={boiler}>
+                <Boiler />
+              </BoilerContext.Provider>
+            ))
           )}
         </ul>
       </div>
