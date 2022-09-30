@@ -45,7 +45,7 @@ const BoilerEditor = ({}: Props) => {
 
   return (
     <>
-      <div className="bg-white lg:min-w-0 lg:flex-1">
+      <div className="bg-white lg:min-w-0 lg:flex-1 border-b border-gray-200 lg:border-0">
         <div
           className="border-b border-t border-gray-200 pl-4 pr-6 pt-4 pb-4 sm:pl-6 lg:pl-8 xl:border-t-0 xl:pl-6 xl:pt-6 hover:bg-gray-100 cursor-pointer"
           onClick={() =>
@@ -57,7 +57,7 @@ const BoilerEditor = ({}: Props) => {
           </h1>
         </div>
         <div className="py-4 px-6">
-          <div className="flex">
+          <div className="sm:flex">
             <div className="flex-1 space-y-1">
               <div className="text-x font-medium">Current power settings</div>
               <div className="text-sm text-gray-500">
@@ -71,7 +71,7 @@ const BoilerEditor = ({}: Props) => {
               </div>
             </div>
 
-            <div className="w-60">
+            <div className="mt-5 sm:mt-0 sm:w-60">
               <Disclosure>
                 <div className="relative">
                   <Disclosure.Button className="flex justify-between w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
