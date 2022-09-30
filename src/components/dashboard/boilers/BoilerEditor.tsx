@@ -56,7 +56,7 @@ const BoilerEditor = ({}: Props) => {
             &larr; {boiler && boiler.data.name}
           </h1>
         </div>
-        <div className="py-2 px-4">
+        <div className="py-4 px-6">
           <div className="flex">
             <div className="flex-1 space-y-1">
               <div className="text-x font-medium">Current power settings</div>
