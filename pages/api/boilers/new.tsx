@@ -4,9 +4,9 @@ import { doc, setDoc } from "firebase/firestore"
 import { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "src/lib"
 import crypto from "crypto"
-import { Boiler } from "types"
+import { BoilerData } from "types"
 
-const dataDefaults: Boiler = {
+const dataDefaults: BoilerData = {
   favourite: false,
   model: "unkown",
   name: "Noname",
@@ -15,6 +15,7 @@ const dataDefaults: Boiler = {
   created: "never",
   status: "gray",
   tags: ["Initializing", "1m"],
+  hive: { farm: 1294136, worker: 6057629 },
 }
 
 const NewBoilerApi = async (req: NextApiRequest, res: NextApiResponse) => {

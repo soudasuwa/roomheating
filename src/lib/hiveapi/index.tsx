@@ -1,20 +1,10 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios"
 import { authenticator } from "otplib"
+import { AuthToken } from "types/hiveapi"
 
 const SCHEME = "https://"
 const HOST = "api2.hiveos.farm"
 const BASE_PATH = "/api/v2"
-
-type Authorization = {
-  // Token to be used in further requests
-  access_token: string
-
-  // Token type. Only bearer type is supported
-  token_type: string
-
-  // TTL in seconds
-  expires_in: number
-}
 
 type Authentication = {
   login: string
@@ -26,7 +16,7 @@ type Authentication = {
 class HiveApi {
   fetcher: AxiosInstance
   authentication: Authentication
-  authorization?: Authorization
+  authorization?: AuthToken
   authorization_expiry?: number
 
   constructor(authentication: Authentication) {
@@ -48,6 +38,8 @@ class HiveApi {
       typeof this.fetcher.defaults.headers.common["Authorization"] ===
         "string" &&
       this.fetcher.defaults.headers.common["Authorization"].length > 0 &&
+      this.authorization !== undefined &&
+      this.authorization.expires_in !== undefined &&
       this.authorization_expiry !== undefined &&
       Date.now() < this.authorization_expiry
     )
@@ -76,7 +68,7 @@ class HiveApi {
 
     // @ts-ignore
     return this.fetcher
-      .post<Authorization>("/auth/login", data)
+      .post<AuthToken>("/auth/login", data)
       .then((response) => {
         // Store the object
         this.authorization = response.data
@@ -86,8 +78,9 @@ class HiveApi {
           "Bearer " + this.authorization.access_token
 
         // Store expiry date
-        this.authorization_expiry =
-          Date.now() + this.authorization.expires_in * 1000
+        if (this.authorization.expires_in !== undefined)
+          this.authorization_expiry =
+            Date.now() + this.authorization.expires_in * 1000
       })
   }
 
@@ -100,37 +93,37 @@ class HiveApi {
     return this.fetcher.post(url, config)
   }
 
-  async get(
+  async get<T = any, D = any>(
     url: string,
-    config?: AxiosRequestConfig<any> | undefined
-  ): Promise<AxiosResponse<any, any>> {
+    config?: AxiosRequestConfig<D> | undefined
+  ): Promise<AxiosResponse<T, D>> {
     await this.auth()
 
     return this.fetcher.get(url, config)
   }
 
-  async put(
+  async put<T = any, D = any>(
     url: string,
-    config?: AxiosRequestConfig<any> | undefined
-  ): Promise<AxiosResponse<any, any>> {
+    config?: AxiosRequestConfig<D> | undefined
+  ): Promise<AxiosResponse<T, D>> {
     await this.auth()
 
     return this.fetcher.put(url, config)
   }
 
-  async patch(
+  async patch<T = any, D = any>(
     url: string,
-    config?: AxiosRequestConfig<any> | undefined
-  ): Promise<AxiosResponse<any, any>> {
+    config?: AxiosRequestConfig<D> | undefined
+  ): Promise<AxiosResponse<T, D>> {
     await this.auth()
 
     return this.fetcher.patch(url, config)
   }
 
-  async delete(
+  async delete<T = any, D = any>(
     url: string,
-    config?: AxiosRequestConfig<any> | undefined
-  ): Promise<AxiosResponse<any, any>> {
+    config?: AxiosRequestConfig<D> | undefined
+  ): Promise<AxiosResponse<T, D>> {
     await this.auth()
 
     return this.fetcher.delete(url, config)

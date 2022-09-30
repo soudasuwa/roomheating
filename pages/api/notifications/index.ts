@@ -1,7 +1,7 @@
 import Cookies from "cookies"
 import { collection, getDocs, query, where } from "firebase/firestore"
 import type { NextApiRequest, NextApiResponse } from "next"
-import { Boiler, BoilerDocument } from "types"
+import { BoilerData, BoilerDocument } from "types"
 import { db } from "config/firebase"
 import { getSession } from "src/lib"
 
@@ -22,7 +22,7 @@ const boilersAPI = async (
     const querySnapshot = await getDocs(q)
 
     querySnapshot.forEach((doc) =>
-      data.push({ id: doc.id, data: doc.data() as Boiler })
+      data.push({ id: doc.id, data: doc.data() as BoilerData })
     )
   }
 

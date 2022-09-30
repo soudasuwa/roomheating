@@ -11,7 +11,7 @@ type NavigationType = {
   href: string
 }[]
 
-type Boiler = {
+type BoilerData = {
   name: string
   status: string
   model: string
@@ -20,11 +20,12 @@ type Boiler = {
   created: TimestampISO
   tags: string[]
   owner: string
+  hive: { farm: number; worker: number }
 }
 
 interface BoilerDocument {
   id: UUID
-  data: Boiler
+  data: BoilerData
 }
 
 type Notification = {
