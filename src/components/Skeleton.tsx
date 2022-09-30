@@ -5,11 +5,25 @@ type Props = {
   children?: React.ReactNode
   className?: string | boolean
   line?: boolean
+  as?:
+    | React.ExoticComponent<{
+        className: string
+        children?: React.ReactNode
+      }>
+    | string
 }
 
-const Skeleton = ({ require, children, className, line }: Props) => {
+const Skeleton = ({
+  require,
+  children,
+  className,
+  line,
+  as: Component,
+}: Props) => {
+  Component = Component || "div"
+
   return (
-    <div
+    <Component
       className={classNames(
         require === undefined &&
           classNames(
@@ -20,7 +34,7 @@ const Skeleton = ({ require, children, className, line }: Props) => {
       )}
     >
       {line && require === undefined ? <>&nbsp;</> : children}
-    </div>
+    </Component>
   )
 }
 
@@ -29,6 +43,7 @@ const defaultProps: Props = {
   children: undefined,
   className: false,
   line: false,
+  as: "div",
 }
 
 Skeleton.defaltProps = defaultProps
