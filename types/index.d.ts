@@ -35,7 +35,7 @@ type Notification = {
   }
   old: string
   message: string
-  Icon: (props: SVGProps<SVGSVGElement>) => JSX.Element
+  icon: keyof typeof import("/home/alessandro/Projects/Cryptotech/roomheating/node_modules/@heroicons/react/24/outline/index")
 }
 
 type FirestoreID = string
