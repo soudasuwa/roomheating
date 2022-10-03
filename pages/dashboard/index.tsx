@@ -7,8 +7,16 @@ import useSWR, { mutate } from "swr"
 import axios from "axios"
 import { BoilerDocument } from "types"
 import { Modal } from "src/components"
-import { BoilerEditor, Boilers, BoilersContext } from "src/components/dashboard/boilers"
-import { Notifications, NotificationsContext } from "src/components/dashboard/notifications"
+import {
+  BoilerContext,
+  BoilerEditor,
+  Boilers,
+  BoilersContext,
+} from "src/components/dashboard/boilers"
+import {
+  Notifications,
+  NotificationsContext,
+} from "src/components/dashboard/notifications"
 
 const Actions = () => {
   const [open, setOpen] = useState(false)
@@ -298,7 +306,17 @@ const DashboardPage = () => {
           <div className="min-w-0 flex-1 bg-white xl:flex">
             <Profile />
 
-            {selected !== undefined ? <BoilerEditor /> : <Boilers />}
+            {selected !== undefined ? (
+              <BoilerContext.Provider
+                value={
+                  boilers && boilers.find((boiler) => boiler.id === selected)
+                }
+              >
+                <BoilerEditor />
+              </BoilerContext.Provider>
+            ) : (
+              <Boilers />
+            )}
           </div>
         </BoilersContext.Provider>
         <NotificationsContext.Provider value={notificationsContext}>
