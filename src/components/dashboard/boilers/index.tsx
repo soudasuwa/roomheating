@@ -5,4 +5,13 @@ import Boilers from "./Boilers"
 import Boiler from "./Boiler"
 import BoilerEditor from "./BoilerEditor"
 
-export { BoilersContext, BoilerContext, Boilers, Boiler, BoilerEditor }
+import PowerEditor from "./PowerEditor"
+
+export {
+  BoilersContext,
+  BoilerContext,
+  Boilers,
+  Boiler,
+  BoilerEditor,
+  PowerEditor,
+}
