@@ -14,6 +14,7 @@ const dataDefaults: BoilerData = {
   owner: "0000",
   created: "never",
   status: "gray",
+  power_plan: "d3cc1d47-14ce-4f0b-b470-098d60c64f91",
   tags: ["Initializing", "1m"],
   hive: { farm: 1294136, worker: 6057629 },
 }
