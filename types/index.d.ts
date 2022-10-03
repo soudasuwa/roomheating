@@ -1,5 +1,5 @@
 import type { NextPage } from "next"
-import * as HeroIcons from "@heroicons/react/24/outline";
+import * as HeroIcons from "@heroicons/react/24/outline"
 import { AppProps } from "next/app"
 
 type MyNextPageProps = { title?: string }
@@ -18,6 +18,7 @@ type BoilerData = {
   model: string
   comment: string
   favourite: boolean
+  power_plan: PowerPlanUUID
   created: TimestampISO
   tags: string[]
   owner: string
@@ -27,6 +28,19 @@ type BoilerData = {
 interface BoilerDocument {
   id: UUID
   data: BoilerData
+}
+
+type PowerPlanData = {
+  name: string
+  intensity: number
+  icon: keyof typeof HeroIcons
+}
+
+type PowerPlanUUID = UUID
+
+type PowerPlanDocument = {
+  id: PowerPlanUUID
+  data: PowerPlanData
 }
 
 type NotificationData = {
